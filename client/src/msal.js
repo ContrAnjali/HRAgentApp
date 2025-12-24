@@ -105,6 +105,41 @@ export async function acquireResourceToken() {
     throw err;
   }
 }
+export async function getUserAvatarImage() {
+  await ensureMsalInitialized();
+  const account = msalApp.getActiveAccount() || msalApp.getAllAccounts()[0];
+  if (!account) return null;
 
+  // Acquire token for Microsoft Graph
+  let accessToken;
+  try {
+    const tokenResp = await msalApp.acquireTokenSilent({
+      account,
+      scopes: ["User.Read"]
+    });
+    accessToken = tokenResp.accessToken;
+  } catch (err) {
+    if (err instanceof InteractionRequiredAuthError) {
+      const tokenResp = await msalApp.acquireTokenPopup({
+        scopes: ["User.Read"]
+      });
+      accessToken = tokenResp.accessToken;
+    } else {
+      throw err;
+    }
+  }
+
+  // Fetch the photo from Microsoft Graph
+  const response = await fetch("https://graph.microsoft.com/v1.0/me/photo/$value", {
+    headers: { Authorization: `Bearer ${accessToken}` }
+  });
+  if (!response.ok) return null;
+  const blob = await response.blob();
+  return await new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result);
+    reader.readAsDataURL(blob);
+  });
+}
 // Make sure your scope/audience matches the bot's OAuth Connection resource:
 export const TOKEN_RESOURCE_SCOPE = 'api://bf8d0a30-b4f8-46a2-ba2a-701f7c601d42/AppReg2CopilotChat';

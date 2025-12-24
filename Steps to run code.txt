@@ -1,0 +1,10 @@
+Client
+
+cd client
+$env:NODE_TLS_REJECT_UNAUTHORIZED = "0"
+[System.Environment]::GetEnvironmentVariable("NODE_EXTRA_CA_CERTS")
+node --use-env-proxy index.js 
+
+Server
+cd server
+npm run dev

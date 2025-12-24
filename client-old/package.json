@@ -1,0 +1,21 @@
+
+{
+    "name": "pva-react-webchat",
+    "private": true,
+    "scripts": {
+      "start": "vite",
+      "build": "vite build",
+      "preview": "vite preview",
+      "dev": "vite"
+    },
+    "dependencies": {
+      "botframework-directlinejs": "^0.14.4",
+      "botframework-webchat": "latest",
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0"
+    },
+    "devDependencies": {
+      "vite": "^5.0.0"
+    }
+  }
+  

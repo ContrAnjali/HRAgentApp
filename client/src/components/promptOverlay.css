@@ -1,0 +1,42 @@
+
+.chat-container {
+    position: relative;
+    height: calc(100vh - 120px); /* leave space for header/footer if needed */
+  }
+  
+  /* Overlay that hides transcript but leaves the send box accessible */
+  .prompt-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+  
+    /* Adjust bottom to sit above the send box.
+       Typical send box height ~72–88px. Tune to your theme. */
+    bottom: 100px;
+  
+    background: #fff; /* Opaque to cover transcript */
+    /* border-bottom: 1px solid #e5e7eb; */
+  
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    z-index: 10;
+    overflow: auto;
+  }
+  
+  .overlay-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .overlay-close {
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    border-radius: 6px;
+    padding: 6px 10px;
+    cursor: pointer;
+  }
+  
